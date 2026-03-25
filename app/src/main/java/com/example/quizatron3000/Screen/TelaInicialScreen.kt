@@ -16,10 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.quizatron3000.R
 
 @Composable
-fun TelaInicialScreen(modifier: Modifier = Modifier) {
+fun TelaInicialScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -43,7 +44,7 @@ fun TelaInicialScreen(modifier: Modifier = Modifier) {
 
         Button(
             onClick = {
-                /*TODO*/
+                navController.navigate("quiz")
             }
         ) {Text(text = "COMECAR!") }
     }
