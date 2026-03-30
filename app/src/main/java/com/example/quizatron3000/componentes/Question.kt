@@ -3,7 +3,7 @@ package com.example.quizatron3000.componentes
 data class Question(
     val pergunta: String,
     val opcoes: List<String>,
-    val respostaCorreta: Int
+    val respostaCorreta: Int,
 )
 
 val perguntas = listOf(

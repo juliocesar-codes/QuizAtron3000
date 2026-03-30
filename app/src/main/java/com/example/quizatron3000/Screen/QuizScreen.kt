@@ -40,16 +40,21 @@ import com.example.quizatron3000.componentes.perguntas
 @Composable
 
 
-fun QuizScreen(navController: NavController) {
+fun QuizScreen(navController: NavController, nome: String) {
 
+//    Aqui tem 3 variaveis importantes para fazer o quiz
+
+//    O indiceAtual se refere a qual pergunta está no momento (1 a 3)
     var indiceAtual by remember {
         mutableStateOf(0)
     }
 
+//    O score representa a quantia de perguntas acertadas
     var score by remember {
         mutableStateOf(0)
     }
 
+//   E a perguntaAtual se refere ao array da pergunta que está sendo mostrado no momento
     val perguntaAtual = perguntas[indiceAtual]
 
 
@@ -73,8 +78,10 @@ fun QuizScreen(navController: NavController) {
                 .border(BorderStroke(1.dp, color = Color.Black)),
             horizontalArrangement = Arrangement.Center
         ) {
+
+//            indiceAtual vale 0, então o projeto começa inserindo +1 para mostrar a 1 pergunta
             Text(
-                text = "Pergunta 1 de 3",
+                text = "Pergunta ${indiceAtual+1} de 3",
                 fontSize = 20.sp,
                 modifier = Modifier.padding(10.dp)
             )
@@ -97,17 +104,32 @@ fun QuizScreen(navController: NavController) {
                     fontSize = 20.sp,
                     modifier = Modifier.padding(10.dp)
                 )
+                }
+
+            /* Aqui é onde o quiz funciona, começamos com um forEach do array criado no arquivo "Question.kt"
+            Onde para cada opção da perguntaAtual, é criado um botão que representa cada alternativa da pergunta.
+            * */
 
                 perguntaAtual.opcoes.forEachIndexed { index, opcao ->
                     OutlinedButton (
                         onClick = {
+
+                            /* Ao clicar no botão acontece duas verificações, a primeira verifica se o botão clicado
+                            é a alternativa correta, caso for, o score recebe +1, caso contrário, não recebe nada
+                            * */
+
                         if (index == perguntaAtual.respostaCorreta){
                             score++
                         }
+
+                            /*A segunda requisição é para verificar se há mais perguntas ou não, caso haja, ao clicar no botão
+                            é aberta a próxima pergunta, caso contrário, vai para a página de resultado.
+                            * */
+
                             if (indiceAtual < perguntas.size - 1){
                                 indiceAtual++
                             }else{
-                                navController.navigate("resultado/$score")
+                                navController.navigate("resultado/$nome/$score")
                             }
                         },
                         modifier = Modifier
@@ -131,4 +153,3 @@ fun QuizScreen(navController: NavController) {
 
 
         }
-    }

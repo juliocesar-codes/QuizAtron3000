@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import com.example.quizatron3000.R
 
 @Composable
-fun ResultadoScreen(navController: NavController, score: Int) {
+fun ResultadoScreen(navController: NavController, score: Int, nome: String) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,7 +62,7 @@ fun ResultadoScreen(navController: NavController, score: Int) {
                 )
             }
             Text(
-                text = "Você acertou $score de 3 perguntas",
+                text = "${nome} Você acertou $score de 3 perguntas",
                 fontSize = 20.sp,
                 modifier = Modifier
                     .padding(20.dp)

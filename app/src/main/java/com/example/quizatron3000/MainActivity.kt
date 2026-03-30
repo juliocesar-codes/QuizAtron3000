@@ -31,29 +31,42 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navController,
                         startDestination = "inicial",
-
                     ){
+//                        Cada composable representa uma página do projeto
                         composable(
                             route = "inicial",
                         ){
                             TelaInicialScreen(navController)
                         }
                         composable(
-                            route = "quiz"
-                        ){
-                            QuizScreen(navController)
-                        }
-                        composable(
-                            route = "resultado/{score}",
-                            arguments = listOf(navArgument("score"){
-                                type = NavType.IntType
+                            route = "quiz/{nome}",
+//                            Aqui é adicionado os argumentos que é passado de uma tela para outra
+                            arguments = listOf(navArgument("nome"){
+                                type = NavType.StringType
                             })
                         ){ backStackEntry ->
+                            val nome = backStackEntry.arguments?.getString("nome") ?: ""
+
+                            QuizScreen(
+                                navController = navController,
+                                nome = nome
+                            )
+                        }
+                        composable(
+                            route = "resultado/{nome}/{score}",
+                            arguments = listOf(
+                                navArgument("score"){ type = NavType.IntType },
+                                navArgument("nome"){ type = NavType.StringType }
+                            )
+//                            BackStackEntry é o parametro para o Lambda
+                        ){ backStackEntry ->
                             val score = backStackEntry.arguments?.getInt("score") ?: 0
+                            val nome = backStackEntry.arguments?.getString("nome") ?: ""
 
                             ResultadoScreen(
-                                navController = navController,
-                                score = score)
+                                navController,
+                                score,
+                                nome)
                         }
                     }
                 }
